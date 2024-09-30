@@ -17,7 +17,7 @@ export const SideBarItems = () => {
           className={cn(
             pathname === item.href
               ? "bg-primary text-muted"
-              : "text-muted-foreground bg-transparent ",
+              : "text-muted-foreground bg-transparent border border-primary ",
             "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-foreground hover:bg-zinc-300 dark:hover:bg-muted "
           )}
         >

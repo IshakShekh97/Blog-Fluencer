@@ -1,4 +1,5 @@
 import { GetPosts } from "@/actions/article-action";
+import { GetSiteImageInfo } from "@/actions/site-action";
 import EmptyDataState from "@/components/reusables/EmptyDataState";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,8 +28,10 @@ import {
 } from "@/components/ui/table";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import {
+  EllipsisVertical,
   FileIcon,
   MoreHorizontal,
+  MoveLeft,
   Plus,
   ScrollText,
   Settings2,
@@ -37,6 +40,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import React from "react";
 
 const SiteIdPage = async ({
   params,
@@ -49,11 +53,22 @@ const SiteIdPage = async ({
   const user = await getUser();
   if (!user) return redirect("/api/auth/login");
 
+  const siteImage = await GetSiteImageInfo(params.siteId);
   const posts = await GetPosts(user.id, params.siteId);
 
   return (
     <>
-      <div className="flex w-full justify-end gap-x-4">
+      <div className="flex items-center gap-x-2">
+        <Button asChild size={"icon"} variant={"outline"} className="mr-3">
+          <Link href={`/dashboard/sites`}>
+            <MoveLeft className="size-4" />
+          </Link>
+        </Button>
+
+        <h1 className="text-2xl font-extrabold">Site Page</h1>
+      </div>
+
+      <div className="hidden sm:flex w-full justify-end gap-x-4">
         {posts.length === 0 ? (
           <>
             <Button variant={"secondary"}>Create Article To View Blogs</Button>
@@ -79,6 +94,68 @@ const SiteIdPage = async ({
           </Link>
         </Button>
       </div>
+      <div className="flex sm:hidden w-full justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button
+              variant={"secondary"}
+              className="w-full  items-center justify-start"
+            >
+              Site Options
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Options</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              {posts.length === 0 ? (
+                <>
+                  <Button className="w-full" variant={"secondary"}>
+                    Create Article To View Blogs
+                  </Button>
+                </>
+              ) : (
+                <Button asChild className="w-full" variant={"secondary"}>
+                  <Link href={`/blog/${posts[0].Site?.subdirectory}`}>
+                    <SquarePen className="size-4 mr-2" />
+                    View Blog
+                  </Link>
+                </Button>
+              )}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button className="w-full" asChild variant={"secondary"}>
+                <Link href={`/dashboard/sites/${params.siteId}/settings`}>
+                  <Settings2 className="size-4 mr-2" /> Settings
+                </Link>
+              </Button>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button asChild className="w-full">
+                <Link href={`/dashboard/sites/${params.siteId}/new-article`}>
+                  <ScrollText className="size-4 mr-2" />
+                  Create Article
+                </Link>
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {siteImage?.imageUrl && (
+        <div className="relative bg-muted w-full h-[300px] rounded-lg overflow-hidden ">
+          <Image
+            src={siteImage.imageUrl as string}
+            alt="post image"
+            layout="fill"
+            className="w-full object-cover"
+          />
+          <div className="absolute bottom-2 right-2 bg-white text-black px-6 py-[.5px] rounded-full ">
+            Site Image
+          </div>
+        </div>
+      )}
 
       {posts === undefined || posts.length === 0 ? (
         <EmptyDataState

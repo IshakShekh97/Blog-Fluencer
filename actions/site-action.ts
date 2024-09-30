@@ -7,6 +7,7 @@ import { SiteCreationSchema, siteSchema } from "@/lib/zodSchema";
 import prisma from "@/lib/db";
 import { requireUser } from "@/lib/requireUser";
 import { toast } from "sonner";
+import { revalidatePath } from "next/cache";
 
 export async function CreateSiteAction(prevState: any, formData: FormData) {
   const user = await requireUser();
@@ -116,4 +117,21 @@ export async function GetDataInDashBoard() {
     sites,
     articles,
   };
+}
+
+export async function GetSiteImageInfo(siteId: string) {
+  const user = await requireUser();
+
+  const siteImage = await prisma.site.findUnique({
+    where: {
+      userId: user.id,
+      id: siteId,
+    },
+    select: {
+      imageUrl: true,
+    },
+  });
+
+  revalidatePath(`/dashboard/sites/${siteId}`);
+  return siteImage;
 }

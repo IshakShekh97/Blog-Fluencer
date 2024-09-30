@@ -4,8 +4,15 @@ import * as React from "react";
 import { Lightbulb, Moon, Sparkles, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function ThemeSwitcher({ className }: { className?: string }) {
+export function ThemeSwitcher({
+  className,
+  btnClassName,
+}: {
+  className?: string;
+  btnClassName?: string;
+}) {
   const { setTheme } = useTheme();
 
   return (
@@ -14,13 +21,13 @@ export function ThemeSwitcher({ className }: { className?: string }) {
         <Button
           size={"icon"}
           onClick={() => setTheme("dark")}
-          className="dark:hidden"
+          className={cn("dark:hidden ", btnClassName)}
         >
           <Lightbulb className="h-[1.2rem] w-[1.2rem]" />
         </Button>
         <Button
           onClick={() => setTheme("light")}
-          className="hidden dark:flex"
+          className={cn("hidden dark:flex", btnClassName)}
           size={"icon"}
         >
           <Sparkles className="h-[1.2rem] w-[1.2rem]" />

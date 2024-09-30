@@ -11,7 +11,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowUpRight } from "lucide-react";
 
 const Hero = async () => {
-  const { getUser, isAuthenticated } = getKindeServerSession();
+  const { isAuthenticated } = getKindeServerSession();
   const auth = await isAuthenticated();
 
   return (
@@ -40,14 +40,14 @@ const Hero = async () => {
         </div>
 
         <nav className="hidden md:flex justify-end space-x-4">
-          <ThemeSwitcher className="fixed right-20 bottom-10" />
+          <ThemeSwitcher className="fixed right-20 bottom-10 z-50" />
 
           {auth ? (
             <Link
               href={"/dashboard"}
-              className="px-6 py-2 border rounded-full bg-gradient-to-tr from-emerald-500 to-white text-black"
+              className="inline-flex h-11 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
             >
-              Dashboard
+              Dash Board
             </Link>
           ) : (
             <RegisterLink>
@@ -90,50 +90,50 @@ const Hero = async () => {
               in minutes
             </p>
 
-            <div className="flex items-center gap-x-4 w-full justify-center mt-5">
-              <LoginLink>
-                <button className="px-6 py-2 bg-primary text-secondary rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
-                  Login
-                </button>
-              </LoginLink>
-              <RegisterLink>
-                <button className="px-4 py-2 group rounded-md border border-black bg-primary-foreground text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200 flex items-center gap-2">
-                  Try For Free{" "}
-                  <ArrowUpRight className="group-hover:animate-bounce" />
-                </button>
-              </RegisterLink>
+            <div className="flex items-center gap-x-4 w-full justify-center mt-5 ">
+              <div className="md:hidden flex gap-3">
+                {auth ? (
+                  <Link
+                    href={"/dashboard"}
+                    className="inline-flex h-11 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                  >
+                    Dash Board
+                  </Link>
+                ) : (
+                  <>
+                    <LoginLink>
+                      <button className="px-6 py-2 bg-primary text-secondary rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
+                        Login
+                      </button>
+                    </LoginLink>
+                    <RegisterLink>
+                      <button className="px-4 py-2 group rounded-md border border-black bg-primary-foreground text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200 flex items-center gap-2">
+                        Try For Free{" "}
+                        <ArrowUpRight className="group-hover:animate-bounce" />
+                      </button>
+                    </RegisterLink>
+                  </>
+                )}
+              </div>
+
+              <div className="hidden md:flex gap-x-5">
+                <LoginLink>
+                  <button className="px-6 py-2 bg-primary text-secondary rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
+                    Login
+                  </button>
+                </LoginLink>
+                <RegisterLink>
+                  <button className="px-4 py-2 group rounded-md border border-black bg-primary-foreground text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255)] transition duration-200 flex items-center gap-2">
+                    Try For Free{" "}
+                    <ArrowUpRight className="group-hover:animate-bounce" />
+                  </button>
+                </RegisterLink>
+              </div>
             </div>
           </div>
 
           <div className="relative w-full py-24 mx-auto flex justify-center">
-            {/* <svg
-              className="w-[80%] -z-50 absolute left-[20%] -mt-32 blur-[150px]"
-              viewBox="0 0 100 100"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient
-                  id="fill"
-                  x1="0%"
-                  y1="0%"
-                  x2="100%"
-                  y2="0%"
-                  gradientTransform="rotate(133 0.5 0.5)"
-                >
-                  <stop offset="0%" stop-color="#4F46E5"></stop>
-                  <stop offset="100%" stop-color="#7b8cff"></stop>
-                </linearGradient>
-              </defs>
-              <path
-                d="M78,61.5Q68,73,56,74.5Q44,76,25.5,73.5Q7,71,9.5,51.5Q12,32,25.5,17.5Q39,3,54.5,14Q70,25,79,37.5Q88,50,78,61.5Z"
-                stroke="none"
-                stroke-width="0"
-                fill="url(#fill)"
-                className=""
-              ></path>
-            </svg> */}
             <div className="bg-gradient-to-r from-red-500 via-amber-600 to-yellow-500 w-[60%] h-[60%] absolute  blur-[200px] -z-30" />
-
             <Image
               src={"/landing-img.png"}
               alt="landing image"

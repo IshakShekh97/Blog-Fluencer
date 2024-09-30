@@ -78,8 +78,8 @@ export const postSchema = z.object({
     .min(3, {
       message: "Description must be at least 3 characters",
     })
-    .max(200, {
-      message: "Description must be at most 150 characters",
+    .max(350, {
+      message: "Description must be at most 350 characters",
     }),
   articleContent: z
     .string({
@@ -106,8 +106,8 @@ export function SiteCreationSchema(options?: {
       .max(40, {
         message: "Subdirectory Name must be at most 40 characters",
       })
-      .regex(/^[a-z]+$/, {
-        message: "Subdirectory Name must be lowercase letters only",
+      .regex(/^[a-z-]+$/, {
+        message: "Subdirectory Name must be lowercase letters and hyphens only",
       })
       .transform((value) => value.toLowerCase())
       .pipe(

@@ -22,6 +22,7 @@ import { Post } from "@prisma/client";
 import { Atom } from "lucide-react";
 import Image from "next/image";
 import { JSONContent } from "novel";
+import React from "react";
 import { useActionState, useState } from "react";
 import slugify from "react-slugify";
 import { toast } from "sonner";

@@ -60,7 +60,7 @@ const CreateNewSitePage = () => {
               <div className="flex flex-col gap-3 ">
                 <Label>Subdirectory :</Label>
                 <Input
-                  placeholder="Subdirectory"
+                  placeholder="Must be Unique , Used In Blog"
                   type="text"
                   name={fields.subDirectory.name}
                   key={fields.subDirectory.key}
